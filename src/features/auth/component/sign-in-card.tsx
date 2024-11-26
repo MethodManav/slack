@@ -1,3 +1,4 @@
+"use client";
 import { Button } from "@/components/ui/button";
 import {
   Card,
@@ -8,17 +9,13 @@ import {
 } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Separator } from "@/components/ui/separator";
-import { FaGithub } from "react-icons/fa";
 import { FcGoogle } from "react-icons/fc";
 import { SigInFlow } from "../types";
 import { useState } from "react";
+import { doSocialLogin } from "@/action/Credential-login";
 
 interface SignInCardProps {
   setState: (state: SigInFlow) => void;
-}
-interface InputValidation {
-  email: string;
-  password: string;
 }
 export const SignInCard = ({ setState }: SignInCardProps) => {
   const [emailValue, setEmail] = useState<string>("");
@@ -60,22 +57,13 @@ export const SignInCard = ({ setState }: SignInCardProps) => {
             disabled={false}
             size="lg"
             variant={"outline"}
-            onClick={() => {}}
+            onClick={() => {
+              doSocialLogin("google");
+            }}
+            value="google"
           >
             Continue With Google
             <FcGoogle className=" size-10" />
-          </Button>
-        </div>
-        <div className="flex flex-col gap-y-2.5">
-          <Button
-            className="w-full relative"
-            disabled={false}
-            size="lg"
-            variant={"outline"}
-            onClick={() => {}}
-          >
-            Continue With Github
-            <FaGithub className="size-5" />
           </Button>
         </div>
         <p className="text-xs text-muted-foreground ">
