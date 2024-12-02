@@ -14,12 +14,14 @@ import { FcGoogle } from "react-icons/fc";
 import { SigInFlow } from "../types";
 import { useState } from "react";
 import { doSocialLogin } from "@/action/Credential-login";
+import { handleFormSubmit } from "@/utlies/commonFunction";
 
 interface SignUpCardProps {
   setState: (state: SigInFlow) => void;
 }
 
 export const SignUpCard = ({ setState }: SignUpCardProps) => {
+  const [name, setName] = useState<string>("");
   const [emailValue, setEmail] = useState<string>("");
   const [passwordValue, setPassword] = useState<string>("");
   const [confirmPasswordValue, setConfirmPassword] = useState<string>("");
@@ -36,6 +38,15 @@ export const SignUpCard = ({ setState }: SignUpCardProps) => {
           <Input
             disabled={false}
             onChange={(e) => {
+              setName(e.target.value);
+            }}
+            type="text"
+            placeholder="Enter Your Full Name "
+            required
+          />
+          <Input
+            disabled={false}
+            onChange={(e) => {
               setEmail(e.target.value);
             }}
             type="email"
@@ -47,20 +58,31 @@ export const SignUpCard = ({ setState }: SignUpCardProps) => {
             onChange={(e) => {
               setPassword(e.target.value);
             }}
-            type="text"
+            type="password"
             placeholder="Enter Your Password "
             required
           />
           <Input
             disabled={false}
-            type="text"
+            type="password"
             onChange={(e) => {
               setConfirmPassword(e.target.value);
             }}
             placeholder="Confirm Your Password "
             required
           />
-          <Button type="submit" className="w-full" size="lg" disabled={false}>
+          <Button
+            type="submit"
+            className="w-full"
+            size="lg"
+            disabled={false}
+            onClick={(e) => {
+              e.preventDefault();
+              if (passwordValue === confirmPasswordValue) {
+                return handleFormSubmit({ name, emailValue, passwordValue });
+              }
+            }}
+          >
             Continue
           </Button>
         </form>

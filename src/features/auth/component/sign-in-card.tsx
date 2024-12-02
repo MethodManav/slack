@@ -13,6 +13,7 @@ import { FcGoogle } from "react-icons/fc";
 import { SigInFlow } from "../types";
 import { useState } from "react";
 import { doSocialLogin } from "@/action/Credential-login";
+import { handleFormSubmit } from "@/utlies/commonFunction";
 
 interface SignInCardProps {
   setState: (state: SigInFlow) => void;
@@ -46,7 +47,16 @@ export const SignInCard = ({ setState }: SignInCardProps) => {
               setPassword(e.target.value);
             }}
           />
-          <Button type="submit" className="w-full" size="lg" disabled={false}>
+          <Button
+            type="submit"
+            className="w-full"
+            size="lg"
+            disabled={false}
+            onClick={(e) => {
+              e.preventDefault();
+              handleFormSubmit({ emailValue, passwordValue });
+            }}
+          >
             Continue
           </Button>
         </form>
